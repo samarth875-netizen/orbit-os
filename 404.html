@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Not Found | Orbit Web OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=DM+Mono:ital@0;1&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .error-code {
+            font-family: Syne, sans-serif;
+            font-size: clamp(80px, 15vw, 200px);
+            font-weight: 800;
+            line-height: 1;
+            margin: 0;
+            background: linear-gradient(135deg, #ff816b, #94bff5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -.03em;
+        }
+
+        .error-message {
+            font-family: Syne, sans-serif;
+            font-size: clamp(24px, 5vw, 48px);
+            margin: 20px 0;
+            color: var(--ink);
+            font-weight: 600;
+            max-width: 500px;
+        }
+
+        .error-description {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+            max-width: 400px;
+            margin: 20px 0 40px;
+        }
+
+        .error-hand-note {
+            display: block;
+            font-family: 'Caveat', cursive;
+            font-size: 18px;
+            color: var(--ink);
+            margin: 15px 0;
+            transform: rotate(-0.8deg);
+            opacity: .9;
+        }
+
+        .error-hand-note::before {
+            content: '→ ';
+            color: var(--coral);
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .error-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--ink);
+            background: var(--lime);
+            color: var(--ink);
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .08em;
+            cursor: pointer;
+            transition: all .2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .error-btn:hover {
+            background: var(--coral);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 rgba(19, 33, 31, .2);
+        }
+
+        .error-btn.secondary {
+            background: transparent;
+            color: var(--muted);
+        }
+
+        .error-btn.secondary:hover {
+            background: var(--blue);
+            color: var(--ink);
+        }
+
+        .error-illustration {
+            width: clamp(120px, 20vw, 240px);
+            height: clamp(120px, 20vw, 240px);
+            margin: 40px 0;
+            display: grid;
+            place-items: center;
+        }
+
+        .floating-orb {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #ff816b, #94bff5, #d4f36a, #ff816b);
+            opacity: .6;
+            animation: float-error 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        .floating-orb::before {
+            content: '?';
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            font-family: Syne, sans-serif;
+            font-size: clamp(40px, 10vw, 80px);
+            font-weight: 800;
+            color: var(--ink);
+        }
+
+        @keyframes float-error {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 640px) {
+            .error-actions {
+                flex-direction: column;
+            }
+
+            .error-btn {
+                width: 100%;
+            }
+
+            .error-code {
+                font-size: clamp(60px, 12vw, 120px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    <div class="desktop">
+        <div class="wallpaper">
+            <div class="wallpaper-sun"></div>
+            <div class="wallpaper-cloud wallpaper-cloud-one"></div>
+            <div class="wallpaper-cloud wallpaper-cloud-two"></div>
+            <div class="wallpaper-mountain wallpaper-mountain-back"></div>
+            <div class="wallpaper-mountain wallpaper-mountain-front"></div>
+            <div class="wallpaper-field"></div>
+        </div>
+
+        <div class="ambient ambient-one"></div>
+        <div class="ambient ambient-two"></div>
+        <div class="ambient ambient-three"></div>
+        <div class="ambient ambient-four"></div>
+        <div class="ambient ambient-five"></div>
+        <div class="ambient ambient-six"></div>
+        <div class="ambient ambient-seven"></div>
+        <div class="ambient ambient-eight"></div>
+        <div class="ambient ambient-nine"></div>
+
+        <div class="error-container">
+            <div class="error-illustration">
+                <div class="floating-orb"></div>
+            </div>
+
+            <h1 class="error-code">404</h1>
+            <h2 class="error-message">Page Not Found</h2>
+
+            <p class="error-description">
+                Looks like this file got lost in the digital void. 
+                It might have been moved, deleted, or never existed at all.
+            </p>
+
+            <span class="error-hand-note">Let's get you back on track</span>
+
+            <div class="error-actions">
+                <a href="/" class="error-btn">← Return Home</a>
+                <button class="error-btn secondary" onclick="history.back()">Go Back</button>
+            </div>
+
+            <p style="margin-top: 60px; color: var(--muted); font-size: 10px; letter-spacing: .12em;">
+                ERROR CODE: 404 NOT FOUND • ORBIT WEB OS
+            </p>
+        </div>
+    </div>
+</body>
+</html>
