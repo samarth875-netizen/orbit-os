@@ -1,4 +1,3 @@
-
 # Orbit Web OS
 
 A basic web-based operating system desktop built with plain HTML, CSS, and JavaScript.

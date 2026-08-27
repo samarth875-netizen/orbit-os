@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orbit Web OS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+    <filter id="paper-rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="saturate" values="0" />
+    </filter>
+  </svg>
+  <div class="grain" aria-hidden="true"></div>
+  <main class="desktop" id="desktop">
+    <div class="wallpaper" aria-hidden="true" id="defaultWallpaper">
+      <span class="wallpaper-sun"></span>
+      <span class="wallpaper-cloud wallpaper-cloud-one"></span>
+      <span class="wallpaper-cloud wallpaper-cloud-two"></span>
+      <span class="wallpaper-mountain wallpaper-mountain-back"></span>
+      <span class="wallpaper-mountain wallpaper-mountain-front"></span>
+      <span class="wallpaper-field"></span>
+    </div>
+    <div class="wallpaper-custom" id="wallpaperCustom" aria-hidden="true"></div>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+    <div class="ambient ambient-four"></div>
+    <div class="ambient ambient-five"></div>
+    <div class="ambient ambient-six"></div>
+    <div class="ambient ambient-seven"></div>
+    <div class="ambient ambient-eight"></div>
+    <div class="ambient ambient-nine"></div>
+    <div class="wallpaper-dim" id="wallpaperDim" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <button class="brand" id="brandButton" aria-label="Open application menu">
+        <span class="brand-mark">O</span>
+        <span>ORBIT<span class="brand-dot">.</span></span>
+      </button>
+      <div class="topbar-status">
+        <span class="status-dot"></span>
+        <span id="networkStatus">Connected</span>
+        <span class="divider"></span>
+        <span id="clock">09:41</span>
+        <span class="divider"></span>
+        <div class="theme-switch" role="group" aria-label="Theme">
+          <button class="theme-choice" data-theme="light" aria-pressed="true">Light</button>
+          <button class="theme-choice" data-theme="dark" aria-pressed="false">Dark</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="desktop-content">
+      <div class="welcome-copy">
+        <p class="eyebrow">PERSONAL WEB OS / 01 — hand-rolled in Nagpur</p>
+        <h1>A calmer place<br><em>to compute.</em><span class="scribble" aria-hidden="true"><svg viewBox="0 0 260 18" preserveAspectRatio="none"><path d="M2 12 Q 40 2 85 10 T 170 10 T 258 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.85"/></svg></span></h1>
+        <p class="welcome-detail">Your essential tools, right where you left them. <span class="hand-note">psst — drag any image here to make it your wallpaper →</span></p>
+        <div class="desktop-status-card">
+          <div class="status-card-heading"><span>DESKTOP PULSE</span><span class="pulse-line"></span><span id="openCount">0 OPEN</span></div>
+          <div class="status-card-main"><strong id="statusGreeting">Good morning.</strong><span id="statusDate">Loading date...</span></div>
+          <div class="status-card-actions"><button class="quick-action" data-app="notes"><span>+</span> Capture a thought</button><button class="quick-action secondary" data-app="clock">Check local time <span>↗</span></button></div>
+          <div class="utility-actions"><button class="utility-button" id="wallpaperQuickButton"><span>🖼</span> Wallpaper</button><button class="utility-button" id="doraToggleButton" aria-pressed="true" title="Hide / show Doraemon"><span>🤖</span> Doraemon</button><button class="utility-button" id="focusButton" aria-pressed="false"><span>◒</span> Focus mode</button><button class="utility-button" id="shuffleButton"><span>✦</span> Shuffle mood</button><button class="utility-button" id="closeAllButton"><span>×</span> Close all</button></div>
+          <div class="status-card-foot">orbit v1.1 • made without templates • <span id="uptime">up just now</span></div>
+        </div>
+        <div class="desk-sticky" id="deskSticky" aria-label="Sticky note">
+          <span class="sticky-tape"></span>
+          <p class="sticky-text">Buy milk — and fix the vibe! <em>— S</em></p>
+          <span class="sticky-meta">taped 2 days ago • drag me</span>
+        </div>
+        <p class="craft-badge">✎ Crafted by Saksh • No AI template, just HTML/CSS/JS and too much coffee.</p>
+      </div>
+
+      <div class="app-constellation" role="group" aria-label="Applications">
+        <p class="constellation-eyebrow">★ TAP ANY TILE — HOVER FOR CLOUD</p>
+        <div class="app-group" data-group="make">
+          <span class="group-label">MAKE —</span>
+          <div class="app-grid">
+            <button class="app-icon" data-app="notes">
+              <span class="app-glyph notes-glyph">✦</span>
+              <span>Notes</span>
+            </button>
+            <button class="app-icon" data-app="files">
+              <span class="app-glyph files-glyph">▰</span>
+              <span>Files</span>
+            </button>
+            <button class="app-icon" data-app="paint">
+              <span class="app-glyph paint-glyph">✎</span>
+              <span>Paint</span>
+            </button>
+            <button class="app-icon" data-app="terminal">
+              <span class="app-glyph terminal-glyph">&gt;_</span>
+              <span>Terminal</span>
+            </button>
+          </div>
+        </div>
+        <div class="app-group" data-group="tools">
+          <span class="group-label">TOOLS —</span>
+          <div class="app-grid">
+            <button class="app-icon" data-app="browser">
+              <span class="app-glyph browser-glyph">◎</span>
+              <span>Browser</span>
+            </button>
+            <button class="app-icon" data-app="calculator">
+              <span class="app-glyph calculator-glyph">＋</span>
+              <span>Calculator</span>
+            </button>
+            <button class="app-icon" data-app="clock">
+              <span class="app-glyph clock-glyph">◷</span>
+              <span>Clock</span>
+            </button>
+            <button class="app-icon" data-app="calendar">
+              <span class="app-glyph calendar-glyph">▦</span>
+              <span>Calendar</span>
+            </button>
+          </div>
+        </div>
+        <div class="app-group" data-group="play">
+          <span class="group-label">PLAY —</span>
+          <div class="app-grid">
+            <button class="app-icon" data-app="game">
+              <span class="app-glyph game-glyph">◆</span>
+              <span>Orbit Dash</span>
+            </button>
+            <button class="app-icon" data-app="snake">
+              <span class="app-glyph snake-glyph">~</span>
+              <span>Snake</span>
+            </button>
+            <button class="app-icon" data-app="minesweeper">
+              <span class="app-glyph mines-glyph">✹</span>
+              <span>Mines</span>
+            </button>
+            <button class="app-icon" data-app="camera">
+              <span class="app-glyph camera-glyph">●</span>
+              <span>Camera</span>
+            </button>
+          </div>
+        </div>
+        <div class="app-group" data-group="connect">
+          <span class="group-label">CONNECT —</span>
+          <div class="app-grid">
+            <button class="app-icon" data-app="instagram">
+              <span class="app-glyph instagram-glyph">◎</span>
+              <span>Instagram</span>
+            </button>
+            <button class="app-icon" data-app="whatsapp">
+              <span class="app-glyph whatsapp-glyph">◔</span>
+              <span>WhatsApp</span>
+            </button>
+            <button class="app-icon" data-app="youtube">
+              <span class="app-glyph youtube-glyph">▶</span>
+              <span>YouTube</span>
+            </button>
+            <button class="app-icon" data-app="about">
+              <span class="app-glyph about-glyph">◌</span>
+              <span>About</span>
+            </button>
+          </div>
+        </div>
+        <div class="app-group" data-group="system">
+          <span class="group-label">SYSTEM —</span>
+          <div class="app-grid">
+            <button class="app-icon" data-app="wallpaper">
+              <span class="app-glyph wallpaper-glyph">🖼</span>
+              <span>Wallpaper</span>
+            </button>
+            <button class="app-icon" data-app="random">
+              <span class="app-glyph random-glyph">?</span>
+              <span>Random Lab</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="window-layer" id="windowLayer"></section>
+    <div id="appTooltip" class="square-cloud" role="tooltip" hidden>
+      <div class="cloud-header"><span class="cloud-dot"></span><span class="cloud-title">Notes</span><span class="cloud-tag">MAKE</span></div>
+      <p class="cloud-desc">Jot down a thought before it drifts.</p>
+      <span class="cloud-arrow"></span>
+    </div>
+    <div id="doraemon" class="doraemon" role="img" aria-label="Doraemon companion" tabindex="0" title="Click me — drag me, right-click for nap!">
+      <div class="dora-propeller-wrap" aria-hidden="true"><div class="dora-propeller"><span></span><span></span></div><div class="dora-stem"></div></div>
+      <img class="dora-img" src="doraemon.webp" alt="Doraemon" draggable="false" decoding="async" fetchpriority="low" onerror="this.onerror=null;this.src='https://static.wikia.nocookie.net/doraemon/images/d/d1/Doraemon_2005_Anime_Remake.png/revision/latest?cb=20241126194535&path-prefix=en';">
+      <div class="dora-shadow" aria-hidden="true"></div>
+    </div>
+    <div id="doraBubble" class="dora-bubble" hidden role="status" aria-live="polite">
+      <span class="dora-bubble-text">Hi! I’m Doraemon! Want dorayaki? 💙</span>
+      <span class="dora-bubble-tail"></span>
+      <button class="dora-bubble-close" aria-label="Close bubble">×</button>
+    </div>
+    <button id="doraSummon" class="dora-summon" hidden aria-label="Summon Doraemon"><span>🤖</span> Summon Doraemon <em>— he’s napping</em></button>
+    <div class="doodle" aria-hidden="true">✦ orbit is personal — keep it messy ✦</div>
+
+    <nav class="dock" aria-label="Dock">
+      <button class="dock-item launcher" id="launcherButton" aria-label="Open launcher"><span>O</span></button>
+      <span class="dock-rule"></span>
+      <button class="dock-item" data-app="notes" aria-label="Open Notes"><span>✦</span></button>
+      <button class="dock-item" data-app="files" aria-label="Open Files"><span>▰</span></button>
+      <button class="dock-item" data-app="terminal" aria-label="Open Terminal"><span>&gt;_</span></button>
+      <button class="dock-item" data-app="browser" aria-label="Open Browser"><span>◎</span></button>
+      <button class="dock-item" data-app="calculator" aria-label="Open Calculator"><span>＋</span></button>
+      <button class="dock-item" data-app="paint" aria-label="Open Paint"><span>✎</span></button>
+      <button class="dock-item" data-app="clock" aria-label="Open Clock"><span>◷</span></button>
+      <button class="dock-item" data-app="snake" aria-label="Open Snake"><span>~</span></button>
+      <button class="dock-item" data-app="wallpaper" aria-label="Open Wallpaper"><span>🖼</span></button>
+      <button class="dock-item" data-app="camera" aria-label="Open Camera"><span>●</span></button>
+      <button class="dock-item" data-app="random" aria-label="Open Random Lab"><span>?</span></button>
+      <form class="dock-search-form" id="dockSearchForm" role="search">
+        <span class="dock-search-icon">⌕</span>
+        <input id="dockSearch" aria-label="Search apps" placeholder="Search apps..." autocomplete="off" />
+        <div class="dock-search-results" id="dockSearchResults" role="listbox" aria-label="Matching apps" hidden></div>
+      </form>
+      <span class="dock-rule"></span>
+      <div class="window-tray" id="windowTray" aria-label="Open windows"></div>
+      <span class="dock-rule"></span>
+      <button class="dock-item dora-dock-toggle" id="doraDockToggle" aria-label="Hide Doraemon" aria-pressed="true" title="Hide Doraemon — click to hide"><span class="dora-dock-icon">●</span></button>
+      <span class="dock-rule"></span>
+      <button class="dock-item" id="themeButton" aria-label="Toggle theme"><span>◐</span></button>
+    </nav>
+
+    <div class="launcher-panel" id="launcherPanel" hidden>
+      <p class="eyebrow">APPLICATIONS</p>
+      <input class="launcher-search" id="launcherSearch" aria-label="Search applications" placeholder="Search applications..." />
+      <button data-app="notes"><span>✦</span> Notes</button>
+      <button data-app="files"><span>▰</span> Files</button>
+      <button data-app="terminal"><span>&gt;_</span> Terminal</button>
+      <button data-app="about"><span>◌</span> About Orbit</button>
+      <button data-app="browser"><span>◎</span> Browser</button>
+      <button data-app="calculator"><span>＋</span> Calculator</button>
+      <button data-app="paint"><span>✎</span> Paint</button>
+      <button data-app="clock"><span>◷</span> Clock</button>
+      <button data-app="game"><span>◆</span> Orbit Dash</button>
+      <button data-app="calendar"><span>▦</span> Calendar</button>
+      <button data-app="snake"><span>~</span> Snake</button>
+      <button data-app="minesweeper"><span>✹</span> Minesweeper</button>
+      <button data-app="camera"><span>●</span> Camera</button>
+      <button data-app="instagram"><span>◎</span> Instagram</button>
+      <button data-app="whatsapp"><span>◔</span> WhatsApp Web</button>
+      <button data-app="youtube"><span>▶</span> YouTube</button>
+      <button data-app="wallpaper"><span>🖼</span> Wallpaper</button>
+      <button data-app="random"><span>?</span> Random Lab</button>
+    </div>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
