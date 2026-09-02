@@ -291,7 +291,32 @@ const apps = {
 
 function openApp(appId) {
   launcherPanel.hidden = true;
-  if (apps[appId]?.externalUrl) { window.open(apps[appId].externalUrl, '_blank', 'noopener,noreferrer'); return; }
+  // Handle social/web apps by opening in the internal browser
+  if (apps[appId]?.externalUrl) {
+    const url = apps[appId].externalUrl;
+    // Open browser app if not already open
+    if (!openWindows.has('browser')) {
+      openApp('browser');
+    }
+    // Get the browser window and navigate to the URL
+    const browserWindow = openWindows.get('browser');
+    if (browserWindow) {
+      const addressInput = browserWindow.querySelector('.address-input');
+      if (addressInput) {
+        addressInput.value = url;
+        const browserFrame = browserWindow.querySelector('.browser-frame');
+        if (browserFrame) {
+          const validatedUrl = validateUrl(url);
+          if (validatedUrl) {
+            addressInput.value = validatedUrl;
+            browserFrame.src = validatedUrl;
+          }
+        }
+      }
+      browserWindow.style.zIndex = ++highestZ;
+    }
+    return;
+  }
   if (openWindows.has(appId)) {
     const existing = openWindows.get(appId);
     existing.style.zIndex = ++highestZ;
