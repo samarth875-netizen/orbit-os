@@ -16,11 +16,38 @@
 ::-webkit-scrollbar-thumb { background: var(--ink); border: 2px solid var(--paper); border-radius: 0; }
 ::-webkit-scrollbar-track { background: rgba(19,33,31,.06); }
 html { scrollbar-width: thin; scrollbar-color: var(--ink) rgba(19,33,31,.06); }
+
+/* ── Mobile optimizations ── */
+html { touch-action: manipulation; }
 body { margin: 0; color: var(--ink); font-family: 'DM Mono', monospace; background: #9fc6ce; }
-button { color: inherit; font: inherit; cursor: pointer; }
+
+/* ── Touch-friendly base styles ── */
+button { 
+  color: inherit; 
+  font: inherit; 
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .15s ease, background .15s ease;
+}
+button:active { transform: scale(0.97); }
+
+input[type="text"],
+input[type="url"],
+input[type="number"],
+input[type="color"],
+textarea,
+select {
+  touch-action: manipulation;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 16px;
+}
+
 button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid #397b72; outline-offset: 3px; }
 .grain { position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: .035; mix-blend-mode: multiply; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.9'/%3E%3C/svg%3E"); }
-.desktop { min-height: 100vh; position: relative; overflow: hidden; background: linear-gradient(180deg, #a9d5dc 0%, #d8e8dc 62%, #98c09b 100%); isolation: isolate; }
+.desktop { min-height: 100vh; position: relative; overflow: hidden; background: linear-gradient(180deg, #a9d5dc 0%, #d8e8dc 62%, #98c09b 100%); isolation: isolate; -webkit-touch-callout: none; }
 .desktop::before { content: ''; position: absolute; inset: 0; z-index: -1; opacity: .2; background-image: linear-gradient(rgba(19,33,31,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(19,33,31,.04) 1px, transparent 1px); background-size: 42px 42px; pointer-events: none; }
 .desktop::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 100; opacity: .07; background: radial-gradient(ellipse at 30% 20%, transparent 60%, rgba(19,33,31,.18) 100%), linear-gradient(180deg, transparent 70%, rgba(19,33,31,.06) 100%); }
 .wallpaper { position: absolute; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
@@ -374,54 +401,218 @@ body.dark .grain { opacity: .018; }
   .window { top: 14%; }
 }
 @media (max-width: 700px) {
-  .topbar { padding: 20px; }
+  /* ── Mobile viewport & spacing ── */
+  html { font-size: 14px; }
+  .topbar { padding: 20px; touch-action: manipulation; }
   .desktop-content { display: block; padding: 10vh 22px 180px; }
   .welcome-copy { flex: none; }
+  
+  /* ── App grid - better touch targets ── */
   .app-constellation { max-width: none; margin-top: 28px; }
   .app-constellation .app-grid { grid-template-columns: repeat(4, minmax(52px, 1fr)); gap: 8px; }
   .app-group { padding: 10px; }
-  .app-glyph { width: 54px; height: 54px; border-radius: 15px; box-shadow: 3px 3px 0 var(--ink); }
+  .app-glyph { width: 54px; height: 54px; border-radius: 15px; box-shadow: 3px 3px 0 var(--ink); min-height: 54px; }
+  .app-glyph:active { transform: scale(0.95); }
   .app-grid span:last-child { font-size: 10px; }
+  
+  /* ── Windows - better mobile handling ── */
+  .window { top: 17%; max-height: calc(100vh - 140px); }
+  .window-content { max-height: calc(100vh - 220px); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .window.is-maximized { inset: 62px 10px 72px; }
+  
+  /* ── Forms - larger touch targets ── */
+  input[type="text"], input[type="url"], input[type="number"], textarea, select { 
+    min-height: 44px; 
+    font-size: 16px;
+    padding: 10px 12px;
+    border-radius: 8px;
+  }
+  button { min-height: 44px; min-width: 44px; }
+  
+  /* ── Browser ── */
+  .browser-frame { height: 330px; }
+  .browser-toolbar { padding: 8px; flex-wrap: nowrap; }
+  .browser-control { min-width: 44px; min-height: 44px; }
+  
+  /* ── Other apps ── */
+  .clock-time { font-size: 34px; }
+  .game-board { height: 200px; }
+  .paint-canvas { touch-action: none; }
+  
+  /* ── Dock - optimized for mobile ── */
+  .dock { 
+    max-width: calc(100vw - 20px); 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start; 
+    padding: 8px 10px;
+  }
+  .dock-item { 
+    min-width: 44px; 
+    min-height: 44px;
+    flex-shrink: 0;
+  }
+  .dock-search-form { 
+    min-width: 140px;
+    flex-shrink: 0;
+    min-height: 44px;
+  }
+  .dock-search-form input { min-height: 28px; }
+  
+  /* ── Sticky note ── */
   .desk-sticky { transform: rotate(0.8deg); }
+  
+  /* ── Hide non-essential elements ── */
   .doodle { display: none; }
   .square-cloud { display: none !important; }
   .topbar-status span:not(.status-dot):not(.divider) { display: none; }
-  .window { top: 17%; }
-  .browser-frame { height: 330px; }
-  .browser-toolbar { padding: 8px; }
-  .clock-time { font-size: 34px; }
-  .game-board { height: 200px; }
-  .dock { max-width: calc(100vw - 20px); overflow: visible; justify-content: flex-start; }
-  .dock-search-form { min-width: 145px; }
 }
 @media (max-width: 460px) {
-  .topbar { align-items: flex-start; padding: 16px; }
+  /* ── Ultra-mobile optimizations ── */
+  html { font-size: 13px; }
+  .topbar { align-items: flex-start; padding: 14px 12px; }
   .theme-switch { display: none; }
-  .desktop-content { padding: 8vh 16px 170px; }
-  .desktop-status-card { margin-top: 26px; }
-  .utility-actions { flex-wrap: wrap; }
-  .utility-button { flex-basis: calc(50% - 3px); }
-  h1 { font-size: clamp(40px, 13vw, 58px); }
-  .app-constellation .app-grid { grid-template-columns: repeat(4, minmax(48px, 1fr)); gap: 7px; }
-  .app-glyph { width: 50px; height: 50px; font-size: 18px; }
-  .app-group { margin-bottom: 12px; }
-  .dock { bottom: 10px; gap: 5px; padding: 7px; }
-  .dock-item { width: 32px; height: 32px; font-size: 14px; }
-  .dock-search-form { width: 112px; min-width: 0; padding: 6px 7px; }
-  .dock-search-form input { font-size: 9px; }
-  .window { top: 10%; width: calc(100vw - 20px); box-shadow: 7px 7px 0 rgba(19,33,31,.88); }
-  .window.is-maximized { inset: 62px 10px 72px; }
-  .window-content { padding: 16px; }
-  .browser-toolbar { flex-wrap: wrap; }
-  .address-form { order: 2; flex-basis: 100%; margin-left: 0; }
-  .browser-frame { height: 270px; }
-  .paint-canvas { min-height: 180px; }
-  .doraemon { width: 54px; height: 68px; bottom: 8px; }
-  .dora-head { width: 52px; height: 42px; left: 1px; }
-  .dora-face { left: 4px; right: 4px; top: 9px; }
-  .dora-body { top: 39px; height: 22px; left: 8px; right: 8px; }
-  .dora-bubble { max-width: 68vw; }
-  .dora-summon { right: 10px; bottom: 74px; padding: 8px 11px; font-size: 10px; }
+  .brand { font-size: 12px; gap: 4px; }
+  .brand-mark { width: 22px; height: 22px; font-size: 11px; }
+  
+  .desktop-content { padding: 8vh 14px 160px; }
+  .desktop-status-card { margin-top: 22px; }
+  .utility-actions { flex-wrap: wrap; gap: 6px; }
+  .utility-button { flex-basis: calc(50% - 3px); min-height: 44px; }
+  
+  h1 { font-size: clamp(36px, 12vw, 48px); }
+  
+  /* ── App grid - smaller but still touch-friendly ── */
+  .app-constellation .app-grid { grid-template-columns: repeat(4, minmax(44px, 1fr)); gap: 6px; }
+  .app-glyph { 
+    width: 44px; 
+    height: 44px; 
+    font-size: 16px;
+    min-height: 44px;
+    border-radius: 12px;
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+  .app-group { 
+    margin-bottom: 10px;
+    padding: 8px 6px;
+  }
+  .group-label { font-size: 8px; letter-spacing: .08em; }
+  
+  /* ── Windows ── */
+  .window { 
+    top: 8%;
+    width: calc(100vw - 16px); 
+    box-shadow: 5px 5px 0 rgba(19,33,31,.88);
+    max-height: calc(100vh - 120px);
+  }
+  .window-header { padding: 10px 12px; }
+  .window-title { font-size: 12px; }
+  .window-content { 
+    padding: 14px;
+    font-size: 11px;
+    max-height: calc(100vh - 180px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .window.is-maximized { inset: 50px 8px 70px; }
+  
+  /* ── Touch-friendly inputs ── */
+  input[type="text"], 
+  input[type="url"], 
+  input[type="number"],
+  input[type="color"],
+  textarea, 
+  select { 
+    min-height: 40px;
+    font-size: 16px;
+    padding: 8px 10px;
+    border-radius: 6px;
+  }
+  textarea { min-height: 100px; }
+  
+  /* ── Dock ── */
+  .dock { 
+    bottom: 8px;
+    gap: 3px;
+    padding: 6px;
+    max-width: calc(100vw - 12px);
+    border-radius: 16px;
+  }
+  .dock-item { 
+    width: 36px; 
+    height: 36px; 
+    font-size: 13px;
+    flex-shrink: 0;
+    min-height: 36px;
+  }
+  .dock-item:active { transform: scale(0.9); }
+  .dock-rule { display: none; }
+  .dock-search-form { 
+    width: 100px;
+    min-width: 100px;
+    flex-shrink: 0;
+    min-height: 36px;
+    padding: 5px 6px;
+  }
+  .dock-search-form input { 
+    font-size: 8px;
+    min-height: 24px;
+  }
+  
+  /* ── Launcher ── */
+  .launcher-panel { 
+    width: calc(100vw - 50px);
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    left: 25px;
+    bottom: 80px;
+  }
+  
+  /* ── App-specific adjustments ── */
+  .browser-toolbar { 
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 6px;
+  }
+  .browser-control { 
+    min-width: 36px; 
+    min-height: 36px;
+    font-size: 14px;
+  }
+  .address-form { 
+    order: 2;
+    flex-basis: 100%;
+    margin-left: 0;
+    margin-top: 4px;
+    min-height: 40px;
+  }
+  .address-input { font-size: 12px; }
+  .browser-frame { height: 240px; }
+  
+  /* ── Paint ── */
+  .paint-canvas { min-height: 160px; }
+  .paint-tools { gap: 6px; margin-bottom: 10px; }
+  
+  /* ── Calculator ── */
+  .calculator-display { min-height: 48px; font-size: 18px; padding: 10px; }
+  .calculator-keys { grid-template-columns: repeat(4, 1fr); gap: 5px; }
+  .calculator-keys button { min-height: 40px; font-size: 12px; }
+  
+  /* ── Clock ── */
+  .clock-time { font-size: 28px; }
+  .clock-date { font-size: 11px; }
+  
+  /* ── Doraemon ── */
+  .doraemon { width: 48px; height: 60px; bottom: 6px; }
+  .dora-bubble { max-width: 70vw; font-size: 10px; }
+  .dora-summon { 
+    right: 8px; 
+    bottom: 68px; 
+    padding: 7px 10px; 
+    font-size: 9px;
+    min-height: 36px;
+  }
 }
 /* ── Extra breakpoints — hand-tuned for every screen ── */
 @media (min-width: 1300px) {
@@ -454,18 +645,140 @@ body.dark .grain { opacity: .018; }
   .dora-bubble { max-width: 62vw; }
 }
 @media (max-width: 380px) {
-  .topbar { padding: 12px; }
-  .brand { font-size: 13px; gap: 6px; }
-  .desktop-content { padding: 7vh 12px 150px; gap: 18px; }
-  .app-constellation .app-grid { grid-template-columns: repeat(4, minmax(42px, 1fr)); gap: 6px; }
-  .app-glyph { width: 44px; height: 44px; font-size: 16px; box-shadow: 2px 2px 0 var(--ink); }
-  .app-group { padding: 8px 8px 7px; }
-  .group-label { font-size: 8px; }
-  .dock { gap: 4px; padding: 6px; border-radius: 16px; }
-  .dock-item { width: 28px; height: 28px; font-size: 12px; }
-  .window { width: calc(100vw - 14px); }
-  .doraemon { width: 50px; height: 64px; bottom: 6px; }
-  .dora-bubble { max-width: 74vw; padding: 8px 9px; }
+  /* ── Extreme mobile - very small phones ── */
+  html { font-size: 12px; }
+  .topbar { padding: 10px; }
+  .brand { font-size: 11px; gap: 4px; }
+  .brand-mark { width: 20px; height: 20px; font-size: 10px; }
+  
+  .desktop-content { padding: 6vh 10px 140px; gap: 14px; }
+  .welcome-detail { font-size: 11px; line-height: 1.5; }
+  
+  .app-constellation .app-grid { grid-template-columns: repeat(4, minmax(38px, 1fr)); gap: 5px; }
+  .app-glyph { 
+    width: 38px; 
+    height: 38px; 
+    font-size: 14px;
+    min-height: 38px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 0 var(--ink);
+    padding: 4px;
+  }
+  .app-group { 
+    padding: 6px 4px;
+    margin-bottom: 8px;
+  }
+  .group-label { font-size: 7px; }
+  
+  /* ── Windows - ultra-compact ── */
+  .window { 
+    top: 5%;
+    width: calc(100vw - 12px);
+    box-shadow: 4px 4px 0 rgba(19,33,31,.85);
+    border-radius: 4px;
+  }
+  .window-header { padding: 8px 10px; }
+  .window-title { font-size: 11px; }
+  .window-actions button { width: 18px; height: 18px; font-size: 9px; }
+  .window-content { 
+    padding: 10px;
+    font-size: 10px;
+    line-height: 1.6;
+  }
+  
+  /* ── Touch targets - minimum 40px ── */
+  input, textarea, select {
+    min-height: 40px;
+    font-size: 16px;
+    padding: 8px;
+  }
+  button { min-height: 40px; font-size: 11px; }
+  
+  /* ── Dock - minimal ── */
+  .dock { 
+    bottom: 6px;
+    gap: 2px;
+    padding: 5px;
+    border-radius: 12px;
+  }
+  .dock-item { 
+    width: 32px; 
+    height: 32px; 
+    font-size: 12px;
+    min-height: 32px;
+  }
+  .dock-search-form { 
+    display: none;
+  }
+  
+  /* ── Launcher - full screen ── */
+  .launcher-panel { 
+    width: calc(100vw - 20px);
+    max-height: 60vh;
+    left: 10px;
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .launcher-panel button { 
+    padding: 10px 6px;
+    font-size: 10px;
+  }
+  
+  /* ── Hide less important elements ── */
+  .desk-sticky { display: none; }
+  .welcome-copy .scribble { display: none; }
+  
+  /* ── Compact forms ── */
+  .calculator-display { 
+    min-height: 40px; 
+    font-size: 16px; 
+    padding: 8px;
+    margin-bottom: 8px;
+  }
+  .calculator-keys { gap: 4px; }
+  .calculator-keys button { min-height: 36px; font-size: 11px; }
+  
+  .browser-toolbar { 
+    gap: 3px;
+    padding: 5px;
+  }
+  .browser-control { 
+    width: 32px; 
+    height: 32px;
+    font-size: 13px;
+    min-height: 32px;
+  }
+  .address-form { 
+    min-height: 36px;
+    padding: 6px 8px;
+  }
+  .browser-frame { height: 200px; }
+  
+  .paint-canvas { min-height: 140px; }
+  .paint-tools { gap: 4px; font-size: 9px; }
+  
+  .clock-time { font-size: 24px; }
+  .game-board { height: 180px; }
+  
+  /* ── Doraemon scaling ── */
+  .doraemon { 
+    width: 42px; 
+    height: 52px;
+    bottom: 4px;
+    left: 12px;
+  }
+  .dora-propeller-wrap { top: -4px; width: 50px; }
+  .dora-bubble { 
+    max-width: 75vw; 
+    font-size: 9px;
+    padding: 7px 9px;
+  }
+  .dora-summon { 
+    display: none;
+  }
 }
 @media (max-height: 720px) {
   .desktop-content { padding-top: 8vh; padding-bottom: 22vh; }
