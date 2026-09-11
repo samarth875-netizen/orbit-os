@@ -1,118 +1,33 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Orbit — deep space</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orbit</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="grain" aria-hidden="true"></div>
-  <main class="desktop" id="desktop">
-    <div class="wallpaper" aria-hidden="true" id="defaultWallpaper">
-      <!-- Black hole wallpaper — cache-busted -->
-      <img class="blackhole-img" src="blackhole.jpg?v=20250911-7" alt="" draggable="false" />
-      <div class="stars"></div>
-    </div>
+  <nav class="dock">
+    <button data-app="files" title="Files">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3.5 7.5v11a1.5 1.5 0 0 0 1.5 1.5h14a1.5 1.5 0 0 0 1.5-1.5v-9a1.5 1.5 0 0 0-1.5-1.5h-7l-2-2.5H5a1.5 1.5 0 0 0-1.5 1.5z"/></svg>
+    </button>
+    <button data-app="paint" title="Paint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 5.5c-4.5-2-11-.5-12.5 4C5 14.5 9 16 11 15l-1.5 3.5c2.5 1 5.5-.5 7-3.5C18.5 11.5 20 8 19 5.5z"/><circle cx="9" cy="9.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="14" cy="8" r="1.1" fill="currentColor" stroke="none"/><circle cx="16.5" cy="12" r="1.1" fill="currentColor" stroke="none"/></svg>
+    </button>
+    <button data-app="terminal" title="Terminal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M7.5 10l2.5 2.5L7.5 15M12.5 15h4"/></svg>
+    </button>
+    <button data-app="browser" title="Browser"><img src="icons/googlechrome.svg" alt=""></button>
+    <button data-app="calculator" title="Calculator">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5.5" y="3.5" width="13" height="17" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01" stroke-width="2.2"/></svg>
+    </button>
+    <button data-app="instagram" title="Instagram"><img src="icons/instagram.svg" alt=""></button>
+    <button data-app="whatsapp" title="WhatsApp"><img src="icons/whatsapp.svg" alt=""></button>
+    <button data-app="youtube" title="YouTube"><img src="icons/youtube.svg" alt=""></button>
+  </nav>
 
-    <header class="topbar">
-      <button class="brand" id="brandButton" aria-label="Open application menu">
-        <span class="brand-mark">O</span>
-        <span>ORBIT<span class="brand-dot">.</span></span>
-      </button>
-      <div class="topbar-status">
-        <span class="status-dot"></span>
-        <span id="networkStatus">Connected</span>
-        <span class="divider"></span>
-        <span id="clock">09:41</span>
-        <span class="divider"></span>
-        <div class="theme-switch" role="group" aria-label="Theme">
-          <button class="theme-choice" data-theme="light" aria-pressed="true">Light</button>
-          <button class="theme-choice" data-theme="dark" aria-pressed="false">Dark</button>
-        </div>
-      </div>
-    </header>
+  <div id="window"></div>
 
-    <section class="desktop-content">
-      <div class="welcome-copy">
-        <p class="eyebrow">PERSONAL WEB OS / 01 — somewhere past the event horizon</p>
-        <h1>A calmer place<br><em>to compute.</em><span class="scribble" aria-hidden="true"><svg viewBox="0 0 260 18" preserveAspectRatio="none"><path d="M2 12 Q 40 2 85 10 T 170 10 T 258 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.85"/></svg></span></h1>
-        <p class="welcome-detail">Your essential tools, right where you left them.</p>
-        <div class="desktop-status-card">
-          <div class="status-card-heading"><span>DESKTOP PULSE</span><span class="pulse-line"></span><span id="openCount">0 OPEN</span></div>
-          <div class="status-card-main"><strong id="statusGreeting">Good morning.</strong><span id="statusDate">Loading date...</span></div>
-          <div class="status-card-actions"><button class="quick-action" data-app="notes"><span>+</span> Capture a thought</button><button class="quick-action secondary" data-app="clock">Check local time <span>↗</span></button></div>
-          <div class="utility-actions"><button class="utility-button" id="doraToggleButton" aria-pressed="true" title="Hide / show Doraemon"><span>D</span> Doraemon</button><button class="utility-button" id="focusButton" aria-pressed="false"><span>◒</span> Focus mode</button><button class="utility-button" id="shuffleButton"><span>✦</span> Shuffle mood</button><button class="utility-button" id="closeAllButton"><span>×</span> Close all</button></div>
-          <div class="status-card-foot">orbit v1.1 • deep space edition • <span id="uptime">up just now</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="window-layer" id="windowLayer"></section>
-    <div id="appTooltip" class="square-cloud" role="tooltip" hidden>
-      <div class="cloud-header"><span class="cloud-dot"></span><span class="cloud-title">Notes</span><span class="cloud-tag">MAKE</span></div>
-      <p class="cloud-desc">Jot down a thought before it drifts.</p>
-      <span class="cloud-arrow"></span>
-    </div>
-    <div id="doraemon" class="doraemon" role="img" aria-label="Doraemon companion" tabindex="0" title="Click me — drag me, right-click for nap!">
-      <img class="dora-img" src="doraemon.webp" alt="Doraemon" draggable="false" decoding="async" fetchpriority="low" onerror="this.onerror=null;this.src='https://static.wikia.nocookie.net/doraemon/images/d/d1/Doraemon_2005_Anime_Remake.png/revision/latest?cb=20241126194535&path-prefix=en';">
-      <div class="dora-shadow" aria-hidden="true"></div>
-    </div>
-    <div id="doraBubble" class="dora-bubble" hidden role="status" aria-live="polite">
-      <span class="dora-bubble-text">Hi! I’m Doraemon! Want a space fact? 💙</span>
-      <span class="dora-bubble-tail"></span>
-      <button class="dora-bubble-close" aria-label="Close bubble">×</button>
-    </div>
-    <button id="doraSummon" class="dora-summon" hidden aria-label="Summon Doraemon"><span>D</span> Summon Doraemon <em>— he’s napping</em></button>
-
-    <nav class="dock" aria-label="Applications">
-      <button class="dock-item launcher" id="launcherButton" aria-label="Open launcher"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="9" cy="9" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="9" r="1.2" fill="currentColor" stroke="none"/><circle cx="9" cy="15" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="1.2" fill="currentColor" stroke="none"/></svg></span></button>
-      <button class="dock-item" data-app="files" aria-label="Open Files"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3.5 7.5v11a1.5 1.5 0 0 0 1.5 1.5h14a1.5 1.5 0 0 0 1.5-1.5v-9a1.5 1.5 0 0 0-1.5-1.5h-7l-2-2.5H5a1.5 1.5 0 0 0-1.5 1.5z"/></svg></span></button>
-      <button class="dock-item" data-app="paint" aria-label="Open Paint"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 5.5c-4.5-2-11-.5-12.5 4C5 14.5 9 16 11 15l-1.5 3.5c2.5 1 5.5-.5 7-3.5C18.5 11.5 20 8 19 5.5z"/><circle cx="9" cy="9.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="14" cy="8" r="1.1" fill="currentColor" stroke="none"/><circle cx="16.5" cy="12" r="1.1" fill="currentColor" stroke="none"/></svg></span></button>
-      <button class="dock-item" data-app="terminal" aria-label="Open Terminal"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M7.5 10l2.5 2.5L7.5 15M12.5 15h4"/></svg></span></button>
-      <button class="dock-item" data-app="browser" aria-label="Open Browser"><img class="dock-ic" src="icons/googlechrome.svg" alt="" draggable="false"></button>
-      <button class="dock-item" data-app="calculator" aria-label="Open Calculator"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5.5" y="3.5" width="13" height="17" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01" stroke-width="2.2"/></svg></span></button>
-      <button class="dock-item" data-app="instagram" aria-label="Open Instagram"><img class="dock-ic" src="icons/instagram.svg" alt="" draggable="false"></button>
-      <button class="dock-item" data-app="whatsapp" aria-label="Open WhatsApp"><img class="dock-ic" src="icons/whatsapp.svg" alt="" draggable="false"></button>
-      <button class="dock-item" data-app="youtube" aria-label="Open YouTube"><img class="dock-ic" src="icons/youtube.svg" alt="" draggable="false"></button>
-      <span class="dock-rule"></span>
-      <form class="dock-search-form" id="dockSearchForm" role="search">
-        <span class="dock-search-icon">⌕</span>
-        <input id="dockSearch" aria-label="Search apps" placeholder="Search apps..." autocomplete="off" />
-        <div class="dock-search-results" id="dockSearchResults" role="listbox" aria-label="Matching apps" hidden></div>
-      </form>
-      <div class="window-tray" id="windowTray" aria-label="Open windows"></div>
-      <button class="dock-item dora-dock-toggle" id="doraDockToggle" aria-label="Hide Doraemon" aria-pressed="true" title="Hide Doraemon — click to hide"><span class="dora-dock-icon">●</span></button>
-      <span class="dock-rule"></span>
-      <button class="dock-item" id="themeButton" aria-label="Toggle theme"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></svg></span></button>
-    </nav>
-
-    <div class="launcher-panel" id="launcherPanel" hidden>
-      <p class="eyebrow">APPLICATIONS</p>
-      <input class="launcher-search" id="launcherSearch" aria-label="Search applications" placeholder="Search applications..." />
-      <button data-app="notes"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4.5"/></svg></span> Notes</button>
-      <button data-app="files"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3.5 7.5v11a1.5 1.5 0 0 0 1.5 1.5h14a1.5 1.5 0 0 0 1.5-1.5v-9a1.5 1.5 0 0 0-1.5-1.5h-7l-2-2.5H5a1.5 1.5 0 0 0-1.5 1.5z"/></svg></span> Files</button>
-      <button data-app="terminal"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M7.5 10l2.5 2.5L7.5 15M12.5 15h4"/></svg></span> Terminal</button>
-      <button data-app="about"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5"/><circle cx="12" cy="8" r="1" fill="currentColor" stroke="none"/></svg></span> About Orbit</button>
-      <button data-app="browser"><img class="dock-ic" src="icons/googlechrome.svg" alt="" draggable="false"> Browser</button>
-      <button data-app="calculator"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5.5" y="3.5" width="13" height="17" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01" stroke-width="2.2"/></svg></span> Calculator</button>
-      <button data-app="paint"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 5.5c-4.5-2-11-.5-12.5 4C5 14.5 9 16 11 15l-1.5 3.5c2.5 1 5.5-.5 7-3.5C18.5 11.5 20 8 19 5.5z"/><circle cx="9" cy="9.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="14" cy="8" r="1.1" fill="currentColor" stroke="none"/><circle cx="16.5" cy="12" r="1.1" fill="currentColor" stroke="none"/></svg></span> Paint</button>
-      <button data-app="clock"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span> Clock</button>
-      <button data-app="game"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.5"/><path d="M3 13.5c3-2.5 15-4.5 18-3.5" opacity=".85"/></svg></span> Orbit Dash</button>
-      <button data-app="calendar"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="5.5" width="16" height="15" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/><path d="M8.5 14h.01M12 14h.01M15.5 14h.01M8.5 17.5h.01M12 17.5h.01" stroke-width="2.2"/></svg></span> Calendar</button>
-      <button data-app="snake"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 17c0-2.5 2.5-3 5-3s5-.5 5-3-2.5-3-5-3H8"/><circle cx="6" cy="17.5" r="1.4" fill="currentColor" stroke="none"/></svg></span> Snake</button>
-      <button data-app="minesweeper"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="14" r="5.5"/><path d="M15 10l2.5-2.5M17.5 7.5l1.5-1.5M19 9l-1.5-1.5"/><path d="M4.5 20l2-2M17.5 20l-2-2M11 5.5v1.5" opacity=".7"/></svg></span> Minesweeper</button>
-      <button data-app="camera"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="7" width="17" height="13" rx="2.5"/><path d="M8.5 7l1.5-2.5h4L15.5 7"/><circle cx="12" cy="13.5" r="3.5"/></svg></span> Camera</button>
-      <button data-app="instagram"><img class="dock-ic" src="icons/instagram.svg" alt="" draggable="false"> Instagram</button>
-      <button data-app="whatsapp"><img class="dock-ic" src="icons/whatsapp.svg" alt="" draggable="false"> WhatsApp Web</button>
-      <button data-app="youtube"><img class="dock-ic" src="icons/youtube.svg" alt="" draggable="false"> YouTube</button>
-      <button data-app="random"><span class="dock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 9h.01M15 9h.01M9 15h.01M15 15h.01M12 12h.01" stroke-width="2.4" stroke-linecap="round"/></svg></span> Random Lab</button>
-    </div>
-  </main>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
