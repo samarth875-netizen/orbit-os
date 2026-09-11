@@ -60,8 +60,10 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 320px;
-  padding: 20px;
+  width: min(380px, 92vw);
+  max-height: 78vh;
+  overflow: auto;
+  padding: 18px;
   background: rgba(20,20,30,0.75);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255,255,255,0.12);
@@ -70,7 +72,16 @@ body {
   font-size: 13px;
   line-height: 1.5;
   display: none;
-  text-align: center;
 }
 
 #window.show { display: block; }
+#window .head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-weight:600; }
+#window .close { padding:4px 8px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.12); color:white; cursor:pointer; }
+.file-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.08); }
+.file-row button { background:none; border:none; color:white; cursor:pointer; text-decoration:underline; font:inherit; }
+#window canvas { width:100%; border-radius:10px; background:#f5f3ec; display:block; margin-top:10px; touch-action:none; }
+#window .tools { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:8px; }
+#window .tools input[type="color"] { width:28px; height:28px; padding:0; border:none; border-radius:6px; }
+#window .tools button { padding:6px 8px; border-radius:8px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.12); color:white; cursor:pointer; }
+.terminal { background:#04070d; border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px; color:#7ce8ff; }
+.terminal input { width:100%; background:transparent; border:none; outline:none; color:#7ce8ff; font:inherit; margin-top:8px; }
